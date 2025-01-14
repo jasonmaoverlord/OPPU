@@ -267,7 +267,7 @@ for i in tqdm(range(len(train))):
             }
         )
 
-print(train_data)
+# print(train_data)
 
 print("Save Train File Start")
 os.makedirs(os.path.join(oppu_folder, f'alpaca/{args.task_name}'), exist_ok=True)
