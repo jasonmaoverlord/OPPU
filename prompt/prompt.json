@@ -44,6 +44,15 @@
         "OPPU_input": "What is the score of the following review on a scale of 1 to 5? just answer with 1, 2, 3, 4, or 5 without further explanation. review: {text}\n score:",
         "OPPU_full": "What is the score of the following review on a scale of 1 to 5? just answer with 1, 2, 3, 4, or 5 without further explanation. review: {text}\n score: {score}"
     },
+    "mooc_course":{
+        "prompt": "What is the score of the following course on a scale of 0 to 1? just answer with 0 or 1 without further explanation. course: {}\n score:",
+        "full_prompt": "What is the score of the following course on a scale of 0 to 1? just answer with 0 or 1 without further explanation. course: {}\n score: {}",
+        "retrieval_history": "course: {text} score: {score}\n",
+        "retrieval_query": "What is the score of the following course on a scale of 0 to 1? course: {text}",
+        "retrieval_query_wokey": "What is the score of the following course on a scale of 0 to 1? course: {}",
+        "OPPU_input": "What is the score of the following course on a scale of 0 to 1? just answer with 0 or 1 without further explanation. course: {text}\n score:",
+        "OPPU_full": "What is the score of the following course on a scale of 0 to 1? just answer with 0 or 1 without further explanation. course: {text}\n score: {score}"
+    },
     "scholarly_title": {
         "prompt": "Generate a title for the following abstract of a paper.\n abstract: {} title:",
         "full_prompt": "Generate a title for the following abstract of a paper.\n abstract: {} title: {}",

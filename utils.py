@@ -72,6 +72,21 @@ def extract_product_review(text):
     return extracted_string
 
 
+def extract_course_name(text):
+    marker = "without further explanation. course: "
+    # Find the position of the marker in the text
+    marker_pos = text.find(marker)
+
+    # Check if the marker is found
+    if marker_pos == -1:
+        raise ValueError()
+
+    # Extract the string after the marker
+    extracted_string = text[marker_pos + len(marker):]
+
+    return extracted_string
+
+
 def extract_scholarly_title(text):
     marker = "Generate a title for the following abstract of a paper: "
     # Find the position of the marker in the text
