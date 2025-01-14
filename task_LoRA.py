@@ -1,3 +1,5 @@
+import os
+
 import torch
 import torch.nn as nn
 import bitsandbytes as bnb
@@ -7,7 +9,7 @@ import argparse
 from rank_bm25 import BM25Okapi
 # from trl import SFTTrainer, DataCollatorForCompletionOnlyLM
 import transformers
-from utils import split_batch, get_first_k_tokens, print_trainable_parameters, name2taskid
+from utils import split_batch, get_first_k_tokens, print_trainable_parameters, name2taskid, write_nested_list_to_json
 from utils import extract_citation_title, extract_option, extract_movie, extract_news_cat, extract_news_headline, extract_product_review, extract_scholarly_title, extract_tweet_paraphrasing
 import json
 from tqdm import tqdm
@@ -27,6 +29,7 @@ parser.add_argument('--access_token', type=str, default=None)
 
 args = parser.parse_args()
 model_name = args.model_name
+exactly_model_name = model_name.split('/')[-1]
 task_name = args.task_name
 batch_size = args.batch_size
 k = args.k
@@ -34,6 +37,10 @@ k = args.k
 cutoff_len = args.cut_off
 add_eos_token = False
 max_epoch = args.max_epoch
+
+# 获取头部文件夹
+oppu_folder = os.path.dirname(os.path.abspath(__file__))
+print(f'oppu_folder: {oppu_folder}')
 
 # # 4 bit quantization inference  
 # bnb_config = BitsAndBytesConfig(
@@ -136,11 +143,11 @@ elif args.task_name == "news_categorize":
 elif args.task_name == "news_headline":
     extract_article = extract_news_headline
 elif args.task_name == "product_rating":
-    extract_article = extrat_product_review
+    extract_article = extract_product_review
 elif args.task_name == "scholarly_title":
     extract_article = extract_scholarly_title
 elif args.task_name == "tweet_paraphrase":
-    extract_article = extrat_tweet_paraphrasing
+    extract_article = extract_tweet_paraphrasing
 
 
 with open('./prompt/prompt.json', 'r') as f:
@@ -260,6 +267,11 @@ for i in tqdm(range(len(train))):
 
 print(train_data)
 
+print("Save Train File Start")
+os.makedirs(os.path.join(oppu_folder, f'alpaca/{args.task_name}'), exist_ok=True)
+write_nested_list_to_json(train_data, os.path.join(oppu_folder, f'alpaca/{args.task_name}', f'k{args.k}-{args.task_name}-{exactly_model_name}-profile.json'))
+print("Save Train File DONE")
+
 train_dataset = Dataset.from_list(train_data)
 train_dataset = train_dataset.map(generate_and_tokenize_prompt).shuffle()
 
@@ -374,6 +386,8 @@ output_file = {
     'golds': pred_all,
     'model': model_name,
 }
+
+os.makedirs(os.path.join(oppu_folder, f'output/{args.k}'), exist_ok=True)
 
 if args.add_profile:
     with open('./output/{}/output-task-k{}-{}-{}-profile.json'.format(args.k, args.task_name, args.task_name, model_name.split('/')[-1]), 'w') as f:

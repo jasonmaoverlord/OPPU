@@ -1,3 +1,4 @@
+import json
 import re
 
 def extract_option(s, num):
@@ -171,3 +172,15 @@ name2taskid = {
     "scholarly_title": "LaMP_5",
     "tweet_paraphrase": "LaMP_7"
 }
+
+def write_nested_list_to_json(data, filename):
+    """
+    将嵌套列表写入到JSON文件。
+
+    :param data: 嵌套列表数据
+    :param filename: 要写入的JSON文件名，默认为'a.json'
+    """
+    # 打开文件准备写入
+    with open(filename, 'w', encoding='utf-8') as file:
+        # 使用json.dump()将数据序列化并写入文件
+        json.dump(data, file, ensure_ascii=False, indent=4)
