@@ -185,7 +185,8 @@ name2taskid = {
     "news_headline": "LaMP_4",
     "product_rating": "LaMP_3",
     "scholarly_title": "LaMP_5",
-    "tweet_paraphrase": "LaMP_7"
+    "tweet_paraphrase": "LaMP_7",
+    "mooc_courses": "LaMP_3N",
 }
 
 def write_nested_list_to_json(data, filename):
