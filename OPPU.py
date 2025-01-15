@@ -9,7 +9,8 @@ import argparse
 from rank_bm25 import BM25Okapi
 # from trl import SFTTrainer, DataCollatorForCompletionOnlyLM
 import transformers
-from utils import split_batch, get_first_k_tokens, print_trainable_parameters, name2taskid, write_nested_list_to_json
+from utils import split_batch, get_first_k_tokens, print_trainable_parameters, name2taskid, write_nested_list_to_json, \
+    extract_course_name
 from utils import extract_citation_title, extract_option, extract_movie, extract_news_cat, extract_news_headline, extract_product_review, extract_scholarly_title, extract_tweet_paraphrasing
 import json
 from tqdm import tqdm
@@ -152,7 +153,8 @@ elif args.task_name == "scholarly_title":
     format_flag = True
 elif args.task_name == "tweet_paraphrase":
     extract_article = extract_tweet_paraphrasing
-
+elif args.task_name == "mooc_course":
+    extract_article = extract_course_name
 
 with open('./prompt/prompt.json', 'r') as f:
     prompt_template = json.load(f)
