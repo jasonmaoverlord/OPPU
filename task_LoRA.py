@@ -271,7 +271,12 @@ for i in tqdm(range(len(train))):
 
 print("Save Train File Start")
 os.makedirs(os.path.join(oppu_folder, f'alpaca/{args.task_name}'), exist_ok=True)
-write_nested_list_to_json(train_data, os.path.join(oppu_folder, f'alpaca/{args.task_name}', f'k{args.k}-{args.task_name}-{exactly_model_name}-profile.json'))
+if args.add_profile:
+    write_nested_list_to_json(train_data, os.path.join(oppu_folder, f'alpaca/{args.task_name}',
+                                                       f'k{args.k}-{args.task_name}-{exactly_model_name}-profile.json'))
+else:
+    write_nested_list_to_json(train_data, os.path.join(oppu_folder, f'alpaca/{args.task_name}',
+                                                       f'k{args.k}-{args.task_name}-{exactly_model_name}.json'))
 print("Save Train File DONE")
 
 train_dataset = Dataset.from_list(train_data)
