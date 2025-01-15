@@ -125,7 +125,7 @@ def get_first_k_tokens(text, k):
     :return: The first k tokens of the text string.
     """
     # Split the text into tokens based on whitespace
-    tokens = text.split()
+    tokens = str(text).split()
     output = " ".join(tokens[:k])
 
     # Return the first k tokens
